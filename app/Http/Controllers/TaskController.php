@@ -10,9 +10,9 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Task::all();
+        return $request->user()->tasks()->get();
     }
 
     /**
@@ -26,10 +26,9 @@ class TaskController extends Controller
             'status' => 'nullable|string|in:pending,in_progress,completed',
             'priority' => 'nullable|string|in:low,medium,high',
             'due_date' => 'nullable|date',
-            'user_id' => 'required|exists:users,id',
         ]);
 
-        $task = Task::create($validated);
+        $task = $request->user()->tasks()->create($validated);
 
         return response()->json($task, 201);
     }
@@ -37,9 +36,9 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
-        $task = Task::find($id);
+        $task = $request->user()->tasks()->find($id);
 
         if (!$task) {
             return response()->json(['message' => 'Task not found'], 404);
@@ -53,7 +52,7 @@ class TaskController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $task = Task::find($id);
+        $task = $request->user()->tasks()->find($id);
 
         if (!$task) {
             return response()->json(['message' => 'Task not found'], 404);
@@ -75,9 +74,9 @@ class TaskController extends Controller
     /**
      * Destroy the specified resource in storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        $task = Task::find($id);
+        $task = $request->user()->tasks()->find($id);
 
         if (!$task) {
             return response()->json(['message' => 'Task not found'], 404);
