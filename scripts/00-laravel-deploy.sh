@@ -7,3 +7,6 @@ php artisan config:cache
 
 echo "Running migrations..."
 php artisan migrate --force
+
+echo "Generating Swagger docs..."
+php artisan l5-swagger:generate
