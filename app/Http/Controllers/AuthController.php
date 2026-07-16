@@ -6,12 +6,30 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use OpenApi\Attributes as OA;
 
 class AuthController extends Controller
 {
-    /**
-     * Register a new user and return an API token.
-     */
+    #[OA\Post(
+        path: "/api/register",
+        summary: "Register a new user",
+        tags: ["Auth"],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["name", "email", "password"],
+                properties: [
+                    new OA\Property(property: "name", type: "string", example: "Jane Doe"),
+                    new OA\Property(property: "email", type: "string", example: "jane@example.com"),
+                    new OA\Property(property: "password", type: "string", example: "password123"),
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 201, description: "User registered successfully"),
+            new OA\Response(response: 422, description: "Validation error"),
+        ]
+    )]
     public function register(Request $request)
     {
         $validated = $request->validate([
@@ -34,9 +52,25 @@ class AuthController extends Controller
         ], 201);
     }
 
-    /**
-     * Log in an existing user and return an API token.
-     */
+    #[OA\Post(
+        path: "/api/login",
+        summary: "Log in an existing user",
+        tags: ["Auth"],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["email", "password"],
+                properties: [
+                    new OA\Property(property: "email", type: "string", example: "jane@example.com"),
+                    new OA\Property(property: "password", type: "string", example: "password123"),
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(response: 200, description: "Login successful"),
+            new OA\Response(response: 422, description: "Invalid credentials"),
+        ]
+    )]
     public function login(Request $request)
     {
         $validated = $request->validate([
@@ -60,9 +94,15 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
-     * Log out the currently authenticated user (revoke current token).
-     */
+    #[OA\Post(
+        path: "/api/logout",
+        summary: "Log out the current user",
+        tags: ["Auth"],
+        security: [["bearerAuth" => []]],
+        responses: [
+            new OA\Response(response: 200, description: "Logged out successfully"),
+        ]
+    )]
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
