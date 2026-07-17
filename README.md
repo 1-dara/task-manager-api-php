@@ -4,8 +4,7 @@ A RESTful task management API built with Laravel and Eloquent ORM, featuring ful
 
 ## Live Demo
 
-- **API Base URL:** https://task-manager-api-php.onrender.com
-- **Interactive API Docs (Swagger UI):** https://task-manager-api-php.onrender.com/api/documentation
+- **API URL:** https://task-manager-api-php.onrender.com
 
 Note: this is hosted on Render's free tier, so the first request after a period of inactivity may take 30-60 seconds to respond while the server spins back up. Occasional transient errors may also occur under free-tier resource constraints — if you hit one, a retry typically resolves it.
 
