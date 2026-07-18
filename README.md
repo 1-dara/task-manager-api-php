@@ -121,4 +121,4 @@ Requests are validated server-side. For example, creating a task without a `titl
 
 ## About
 
-Built while learning Laravel, as a direct comparison to an existing Node.js/Express/Prisma implementation of the same API.
+Built with Laravel, as a direct comparison to an existing Node.js/Express/Prisma implementation of the same API.
