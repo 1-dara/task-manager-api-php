@@ -1,3 +1,5 @@
+![Tests](https://github.com/1-dara/task-manager-api-php/actions/workflows/tests.yml/badge.svg)
+
 # Task Manager API (Laravel)
 
 A RESTful task management API built with Laravel and Eloquent ORM, featuring full CRUD operations, request validation, and a relational database schema. Built as a Laravel port of an existing [Node.js/Express/Prisma version] to compare backend frameworks.
